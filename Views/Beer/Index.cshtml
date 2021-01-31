@@ -1,0 +1,105 @@
+﻿@{
+
+    ViewData["Title"] = "Beer Page";
+
+    List<MongoApi.Models.Beer> bieres = (List<MongoApi.Models.Beer>)ViewData["beers"];
+    MongoApi.Services.MongoInfo mongoInfo = (MongoApi.Services.MongoInfo)ViewData["mongoinfo"];
+    
+}
+
+@section scripts
+{
+    <script>
+        $(document).ready(function() {
+            console.info("Init Beer.js");
+        });
+
+        function submitBeer()  {
+            console.info("submitBeer");
+
+            var jsonData = {
+                BeerName: $('#name').val(),
+                manufacturer: $('#manufacturer').val()
+            }
+
+
+            var dataType = 'application/json; charset=utf-8';
+
+            console.info(JSON.stringify(jsonData))
+            $.ajax({
+                type: "POST",
+                
+                url: "api/Beer/save",
+                data: JSON.stringify(jsonData),
+                dataType: "json",
+                contentType: dataType,
+                success: function(data){
+                    console.info(data.BeerName);
+                    
+                },
+                failure: function(errMsg) {
+                    console.error(errMsg);
+                }
+            });
+        }
+
+    </script>
+}
+
+    <div class="text-centeree">
+        <h1>Beer Collection</h1>
+
+        @if (ViewData["beers"] != null)
+        {
+            <h6>MongoUrl: @mongoInfo.ConnectionString</h6>
+
+        }
+
+    <table id="beer-list" class="table">
+        <thead class="thead-dark">
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">Name</th>
+                <th scope="col">Manufacturer</th>
+                <th scope="col">Price</th>
+                <th scope="col">Category</th>
+            </tr>
+        </thead>
+        <tbody>
+
+
+
+        @foreach (var beer in bieres) {
+
+             <tr>
+                <td>@beer.Id</td>
+                <td>@beer.BeerName</td>
+                <td>@beer.Manufacturer</td>
+                <td>@beer.Price</td>
+                <td>@beer.Category</td>
+            </tr>
+
+        }
+
+        
+             </tbody>
+    </table>
+
+    <h1>New Beer</h1>
+
+    <form>
+    <div class="mb-3">
+        <label for="name" class="form-label">Name</label>
+        <input type="text" class="form-control" id="name" aria-describedby="namelHelp">
+        <div id="namelHelp" class="form-text">Name of the beer</div>
+    </div>
+    <div class="mb-3">
+        <label for="manufacturer" class="form-label">Manufacturer</label>
+        <input type="text" class="form-control" id="manufacturer">
+    </div>
+    
+    <button type="button" onClick="submitBeer()" class="btn btn-primary">Enregistrer</button>
+    </form>
+
+    
+    </div>
