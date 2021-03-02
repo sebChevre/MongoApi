@@ -21,18 +21,10 @@
       "launchBrowser": true,
       "applicationUrl": "https://localhost:5011;http://localhost:5010",
       "environmentVariables": {
-        "ASPNETCORE_ENVIRONMENT": "Production",
-        "MONGODB_URL": "mongodb://localhost:27017"
-      }
-    },
-    "MongoApiDocker": {
-      "commandName": "Project",
-      "launchBrowser": true,
-      "applicationUrl": "https://localhost:5011;http://localhost:5010",
-      "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development",
-        "MONGODB_URL": "mongodb://localhost:27017"
+        "MONGODB_URL": "mongodb://localhost:27019"
       }
     }
+    
   }
 }

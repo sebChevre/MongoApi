@@ -1,4 +1,6 @@
-﻿namespace MongoApi.Models
+﻿using System.Text.Json.Serialization;
+
+namespace MongoApi.Models
 {
     public class SystemInfo
     {
@@ -7,7 +9,11 @@
         public string LocalIp { get; set; }
 
         public string MongoDbConnectionString {get; set;}
-        public string Env { get; internal set; }
-        public string MongUrl { get; internal set; }
+
+        [JsonPropertyName("ASPNETCORE_ENVIRONMENT")]        
+        public string AspNetCoreEnv { get; internal set; }
+
+        [JsonPropertyName("MONGODB_URL")]      
+        public string MongoDbUrl { get; internal set; }
     }
 }

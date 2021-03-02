@@ -14,7 +14,14 @@ namespace MongoApi.Services
 
         public BeerService(IBeerstoreDatabaseSettings settings)
         {
-            var client = new MongoClient(settings.ConnectionString);
+
+            var mongoUrl =  Environment.GetEnvironmentVariable("MONGODB_URL");
+            
+            if(mongoUrl == null){
+                mongoUrl = settings.ConnectionString;
+            }
+
+            var client = new MongoClient(mongoUrl);
             var database = client.GetDatabase(settings.DatabaseName);
 
             _beers = database.GetCollection<Beer>(settings.BeerCollectionName);
