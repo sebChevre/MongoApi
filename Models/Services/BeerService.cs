@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using MongoApi.Infrastructure;
 
 namespace MongoApi.Services
 {
@@ -12,20 +13,17 @@ namespace MongoApi.Services
     {
         private readonly IMongoCollection<Beer> _beers;
 
+        private readonly MongoDbHandler _mongoDbHandler;
+
         public BeerService(IBeerstoreDatabaseSettings settings)
         {
 
-            var mongoUrl =  Environment.GetEnvironmentVariable("MONGODB_URL");
-            
-            if(mongoUrl == null){
-                mongoUrl = settings.ConnectionString;
-            }
+            _mongoDbHandler = new MongoDbHandler(settings);
 
-            var client = new MongoClient(mongoUrl);
-            var database = client.GetDatabase(settings.DatabaseName);
-
-            _beers = database.GetCollection<Beer>(settings.BeerCollectionName);
+           
+            _beers =  _mongoDbHandler.GetDataBase().GetCollection<Beer>(settings.BeerCollectionName);
         }
+
 
         public List<Beer> Get() =>
             _beers.Find(beer => true).ToList();
@@ -45,7 +43,7 @@ namespace MongoApi.Services
         public void Remove(Beer bookIn) =>
             _beers.DeleteOne(beer => beer.Id == bookIn.Id);
 
-        public void Remove(string id) =>
+        public DeleteResult Remove(string id) =>
             _beers.DeleteOne(beer => beer.Id == id);
     }
 }

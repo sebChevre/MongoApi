@@ -22,7 +22,8 @@
       "applicationUrl": "https://localhost:5011;http://localhost:5010",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development",
-        "MONGODB_URL": "mongodb://localhost:27017"
+        "MONGODB_URL": "mongodb://localhost:27017",
+        "PIPEDREAM_URL": "https://31301cce0d381d6c9338a006d3d31044.m.pipedream.net"
       }
     }
     

@@ -3,7 +3,7 @@
 
     String env = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT");
     String mongoDbUrl = Environment.GetEnvironmentVariable("MONGODB_URL");
-
+    String pipeDreamUrl = Environment.GetEnvironmentVariable("PIPEDREAM_URL_URL");
 
 }
 
@@ -16,15 +16,35 @@
 
 @if (env == null)
 {
-    <div class="alert alert-primary" role="alert">
+    <div class="alert alert-danger" role="alert">
         La variable d'environnement ASPNETCORE_ENVIRONMENT n'est pas définie
+    </div>
+}else{
+    <div class="alert alert-success" role="alert">
+        La variable d'environnement ASPNETCORE_ENVIRONMENT est correctement configuré: @env
     </div>
 }
 
 @if (mongoDbUrl == null)
 {
-    <div class="alert alert-primary" role="alert">
+    <div class="alert alert-danger" role="alert">
         La variable d'environnement MONGODB_URL n'est pas définie
+    </div>
+}else{
+    <div class="alert alert-success" role="alert">
+        La variable d'environnement MONGODB_URL est correctement configuré: @mongoDbUrl
+    </div>
+}
+
+
+@if (pipeDreamUrl == null)
+{
+    <div class="alert alert-danger" role="alert">
+        La variable d'environnement PIPEDREAM_URL n'est pas définie
+    </div>
+}else{
+    <div class="alert alert-success" role="alert">
+        La variable d'environnement PIPEDREAM_URL est correctement configuré: @pipeDreamUrl
     </div>
 }
     

@@ -4,6 +4,7 @@ using System.Linq;
 using Microsoft.AspNetCore.Mvc;
 using MongoApi.Models;
 using MongoApi.Services;
+using MongoDB.Driver;
 
 namespace StandardAPI.Controllers.api
 {
@@ -18,6 +19,15 @@ namespace StandardAPI.Controllers.api
         public BeerApiController(BeerService beerService,IBeerstoreDatabaseSettings settings){
             _settings = settings;
             _beerService = beerService;
+        }
+
+        [HttpDelete]
+        [Route("{id}")]
+        public bool Delete(string id)
+        {
+            var result = _beerService.Remove(id);
+            
+            return result.IsAcknowledged;
         }
 
         [HttpPost]

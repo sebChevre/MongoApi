@@ -4,17 +4,85 @@
 
     List<MongoApi.Models.Beer> bieres = (List<MongoApi.Models.Beer>)ViewData["beers"];
     MongoApi.Services.MongoInfo mongoInfo = (MongoApi.Services.MongoInfo)ViewData["mongoinfo"];
+    String env = (String)ViewData["env"];
     
 }
 
 @section scripts
 {
     <script>
+        
         $(document).ready(function() {
             console.info("Init Beer.js");
+
+            loadBeer();
         });
 
-        function submitBeer()  {
+        function clearTable () {
+            $('#beer-list tbody tr').remove();
+        }
+
+        function fillTable (data) {
+            
+            data.forEach(function(entry) {
+                $('#beer-list').append("<tr>"+
+                "<td>" + entry.id + "</td>"+
+                "<td>" + entry.beerName + "</td>" +
+                "<td>" + entry.manufacturer + "</td>" +
+                "<td>" + entry.price +"</td>" +
+                "<td>" + entry.categoriy + "</td>" +
+                "<td><button type='button' onclick='onRemoveBeer(this)' id='" + entry.id + "'' class='btn btn-danger'>Danger</button></td>" +
+                "</tr>")
+            });
+        }
+
+        function loadBeer () {
+            var dataType = 'application/json; charset=utf-8';
+
+            $.ajax({
+                type: "GET",
+                url: "api/Beer",
+                contentType: dataType,
+                success: fillTable,
+                failure: function(errMsg) {
+                    console.error(errMsg);
+                }
+            });
+        }
+
+        function clearForm () {
+            $('#name').val(""),
+            $('#manufacturer').val("")
+        }
+        function onRemoveBeer (element) {
+            
+            console.log(element.id);
+            var dataType = 'application/json; charset=utf-8';
+
+            $.ajax({
+                type: "DELETE",
+                url: "api/Beer/" + element.id,
+                contentType: dataType,
+                success: function(result){
+                    
+                    if(result){
+                        clearTable();
+                        loadBeer();
+                    }
+                },
+                failure: function(errMsg) {
+                    console.error(errMsg);
+                }
+            });
+
+        }
+
+        
+
+        
+
+        function onSubmitBeer()  {
+            var dataType = 'application/json; charset=utf-8';
             console.info("submitBeer");
 
             var jsonData = {
@@ -22,27 +90,27 @@
                 manufacturer: $('#manufacturer').val()
             }
 
-
-            var dataType = 'application/json; charset=utf-8';
-
-            console.info(JSON.stringify(jsonData))
+            
             $.ajax({
                 type: "POST",
-                
                 url: "api/Beer",
                 data: JSON.stringify(jsonData),
                 dataType: "json",
                 contentType: dataType,
                 success: function(data){
                     console.info(data.BeerName);
-                    
+                    clearTable();
+                    clearForm();
+                    loadBeer(data);
                 },
                 failure: function(errMsg) {
                     console.error(errMsg);
                 }
-            });
+            });            
         }
 
+
+    
     </script>
 }
 
@@ -63,23 +131,14 @@
                 <th scope="col">Manufacturer</th>
                 <th scope="col">Price</th>
                 <th scope="col">Category</th>
+                <th scope="col">Delete</th>
             </tr>
         </thead>
         <tbody>
 
 
 
-        @foreach (var beer in bieres) {
-
-             <tr>
-                <td>@beer.Id</td>
-                <td>@beer.BeerName</td>
-                <td>@beer.Manufacturer</td>
-                <td>@beer.Price</td>
-                <td>@beer.Category</td>
-            </tr>
-
-        }
+        
 
         
              </tbody>
@@ -98,7 +157,7 @@
         <input type="text" class="form-control" id="manufacturer">
     </div>
     
-    <button type="button" onClick="submitBeer()" class="btn btn-primary">Enregistrer</button>
+    <button type="button" onClick="onSubmitBeer()" class="btn btn-primary">Enregistrer</button>
     </form>
 
     
