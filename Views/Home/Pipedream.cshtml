@@ -1,0 +1,63 @@
+﻿@{
+    ViewData["Title"] = "Pipedream";
+
+    String pipeDreamUrl = Environment.GetEnvironmentVariable("PIPEDREAM_URL");
+
+}
+
+@section scripts
+{
+    <script>
+    
+   
+
+    function callPipeDream () {
+        var dataType = 'application/json; charset=utf-8';
+
+        $.ajax({
+            type: "GET",
+            url: "@pipeDreamUrl",
+            contentType: dataType,
+            success: function (data){
+                console.log(data)
+                $('#pipedream_zone').append("<div class='alert alert-secondary' role='alert'>test: " + data.test +", date: " + data.date +"</div>")
+                //$('#pipedream_zone').text(data)
+            },
+            failure: function(errMsg) {
+                console.error(errMsg);
+            }
+        });
+    }
+
+ 
+       
+    
+    </script>
+
+}
+<div class="text-center">
+    <h1 class="display-4">Welcome</h1>
+    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+
+    <h1>Configuration</h1>
+
+
+@if (pipeDreamUrl == null)
+{
+    <div class="alert alert-danger" role="alert">
+        La variable d'environnement PIPEDREAM_URL n'est pas définie
+    </div>
+}else{
+    <div class="alert alert-success" role="alert">
+        La variable d'environnement PIPEDREAM_URL est correctement configuré: @pipeDreamUrl
+    </div>
+    <div>
+        <button type="button" class="btn btn-info" onclick="callPipeDream()">Test API MongoDbApiTest</button>
+
+        <div id="pipedream_zone"></div>
+    </div>
+}
+
+
+    
+</div>

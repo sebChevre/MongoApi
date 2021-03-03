@@ -28,6 +28,11 @@ namespace MongoApi.Controllers
             return View();
         }
 
+        public IActionResult Pipedream()
+        {
+            return View();
+        }
+
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {

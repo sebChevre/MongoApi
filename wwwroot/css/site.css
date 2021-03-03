@@ -92,6 +92,9 @@ body {
   z-index: 1;
 }
 
+.green{
+  background: rgb(51, 238, 82);
+}
 /* Custom styles */
 
 .corner-ribbon.sticky{
