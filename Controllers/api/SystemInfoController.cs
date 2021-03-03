@@ -28,7 +28,6 @@ namespace StandardAPI.Controllers.api
                 Ip = HttpContext.Connection.RemoteIpAddress.ToString(),
                 Host = HttpContext.Request.Host.Host,
                 LocalIp = HttpContext.Connection.LocalIpAddress.ToString(),
-                MongoDbConnectionString = _settings.ConnectionString,
                 AspNetCoreEnv = envNet,
                 MongoDbUrl = mongoDbUrl
 

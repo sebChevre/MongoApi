@@ -8,7 +8,6 @@ namespace MongoApi.Models
         public string Host { get; set; }
         public string LocalIp { get; set; }
 
-        public string MongoDbConnectionString {get; set;}
 
         [JsonPropertyName("ASPNETCORE_ENVIRONMENT")]        
         public string AspNetCoreEnv { get; internal set; }

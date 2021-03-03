@@ -12,21 +12,22 @@ namespace MongoApi.Infrastructure
 {
     public class MongoDbHandler
     {
-        private readonly IMongoCollection<MongoInfo> _beers;
+    
         private readonly MongoClient _client;
         IBeerstoreDatabaseSettings _settings;
         IMongoDatabase _dataBase;
+
+        string _mongoUrl;
         public MongoDbHandler(IBeerstoreDatabaseSettings settings)
         {
-            var mongoUrl =  Environment.GetEnvironmentVariable("MONGODB_URL");
+            _mongoUrl =  Environment.GetEnvironmentVariable("MONGODB_URL");
             
-            if(mongoUrl == null){
-                mongoUrl = settings.ConnectionString;
+            if(_mongoUrl != null){
+                _client = new MongoClient(_mongoUrl);
+                _settings = settings;
+                _dataBase = _client.GetDatabase(settings.DatabaseName);
             }
 
-            _client = new MongoClient(mongoUrl);
-            _settings = settings;
-            _dataBase = _client.GetDatabase(settings.DatabaseName);
         }
 
 public IMongoDatabase GetDataBase(){
@@ -43,7 +44,7 @@ public IMongoDatabase GetDataBase(){
             return new MongoInfo
             {
                 Databasenames = (List<string>)this.getDatabaseNamesAsList(_client.ListDatabaseNames()),
-                ConnectionString = _settings.ConnectionString
+                ConnectionString = _mongoUrl
             };
         }
 

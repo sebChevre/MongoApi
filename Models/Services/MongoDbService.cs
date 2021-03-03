@@ -12,9 +12,7 @@ namespace MongoApi.Services
 {
     public class MongoDbService
     {
-        private readonly IMongoCollection<MongoInfo> _beers;
-        private readonly MongoClient _client;
-        IBeerstoreDatabaseSettings _settings;
+        
 
         private readonly MongoDbHandler _mongoDbHandler;
         public MongoDbService(IBeerstoreDatabaseSettings settings)
