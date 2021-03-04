@@ -1,4 +1,5 @@
 ﻿FROM mcr.microsoft.com/dotnet/core/sdk:3.1 AS build-env
+#Rep de travail
 WORKDIR /app
 
 # Copy csproj and restore as distinct layers
@@ -7,6 +8,8 @@ RUN dotnet restore
 
 # Copy everything else and build
 COPY . ./
+
+# Publication profile Release, Repertoire de sortie
 RUN dotnet publish -c Release -o out
 
 # Build runtime image
