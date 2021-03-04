@@ -13,10 +13,12 @@
         
         $(document).ready(function() {
             console.info("Init Beer.js");
-
+             $('#newbeer-form').show();
+            $('#newbeer-spinner').hide();
             loadBeer();
         });
 
+    
         function clearTable () {
             $('#beer-list tbody tr').remove();
         }
@@ -51,7 +53,9 @@
 
         function clearForm () {
             $('#name').val(""),
-            $('#manufacturer').val("")
+            $('#manufacturer').val(""),
+            $('#price').val(""),
+            $('#category').val("")
         }
         function onRemoveBeer (element) {
             
@@ -81,12 +85,17 @@
         
 
         function onSubmitBeer()  {
+             $('#newbeer-form').hide();
+            $('#newbeer-spinner').show();
+            
             var dataType = 'application/json; charset=utf-8';
             console.info("submitBeer");
 
             var jsonData = {
                 BeerName: $('#name').val(),
-                manufacturer: $('#manufacturer').val()
+                Manufacturer: $('#manufacturer').val(),
+                Price: $('#price').val(),
+                Category: $('#category').val()
             }
 
             
@@ -100,6 +109,8 @@
                     console.info(data.BeerName);
                     clearTable();
                     clearForm();
+                     $('#newbeer-form').show();
+                    $('#newbeer-spinner').hide();
                     loadBeer(data);
                 },
                 failure: function(errMsg) {
@@ -145,15 +156,29 @@
 
     <h1>New Beer</h1>
 
-    <form>
+    <div id="newbeer-spinner" class="spinner-border" role="status">
+        <span class="sr-only">Loading...</span>
+    </div>
+
+    <form id="newbeer-form">
     <div class="mb-3">
         <label for="name" class="form-label">Name</label>
         <input type="text" class="form-control" id="name" aria-describedby="namelHelp">
-        <div id="namelHelp" class="form-text">Name of the beer</div>
+        
     </div>
     <div class="mb-3">
         <label for="manufacturer" class="form-label">Manufacturer</label>
         <input type="text" class="form-control" id="manufacturer">
+    </div>
+
+    <div class="mb-3">
+        <label for="manufacturer" class="form-label">Price</label>
+        <input type="text" class="form-control" id="price">
+    </div>
+
+    <div class="mb-3">
+        <label for="manufacturer" class="form-label">Catégorie</label>
+        <input type="text" class="form-control" id="category">
     </div>
     
     <button type="button" onClick="onSubmitBeer()" class="btn btn-primary">Enregistrer</button>

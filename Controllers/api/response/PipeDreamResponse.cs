@@ -4,7 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 
  
-namespace MongoApi.Controllers.api.rsponse
+namespace MongoApi.Controllers.Api.Response
 {
     public class PipeDreamResponse
     {

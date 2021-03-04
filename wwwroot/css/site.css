@@ -100,3 +100,21 @@ body {
 .corner-ribbon.sticky{
   position: fixed;
 }
+
+.version{
+  font-style: italic;
+  font-weight: bolder;
+}
+
+.gitvalue{
+  font-size: 12px;
+  font-weight: bold;
+}
+
+.gitlabel{
+  font-size: 12px;
+}
+
+.call-pipedream-btn{
+  margin: 10px;
+}

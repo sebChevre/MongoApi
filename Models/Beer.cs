@@ -14,7 +14,7 @@ namespace MongoApi.Models
         [Required, MaxLength(30), RegularExpression(@"^[a-zA-Zàâçéèêëîïôûùüÿñæœ''-'\s]{1,40}$")] ///^[a-zàâçéèêëîïôûùüÿñæœ .-]*$/i
         public string BeerName { get; set; }
 
-        public decimal Price { get; set; }
+        public string Price { get; set; }
 
         public string Category { get; set; }
 

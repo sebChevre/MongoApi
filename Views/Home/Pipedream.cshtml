@@ -9,9 +9,17 @@
 {
     <script>
     
-   
+   $(function () {
+       $('#pipedream_spinner').hide();
+       $('#call_pipedream_btn').show();
+       
+   })
+
 
     function callPipeDream () {
+        $('#pipedream_spinner').show();
+        $('#call_pipedream_btn').hide();
+
         var dataType = 'application/json; charset=utf-8';
 
         $.ajax({
@@ -21,7 +29,8 @@
             success: function (data){
                 console.log(data)
                 $('#pipedream_zone').append("<div class='alert alert-secondary' role='alert'>test: " + data.test +", date: " + data.date +"</div>")
-                //$('#pipedream_zone').text(data)
+                $('#pipedream_spinner').hide();
+       $('#call_pipedream_btn').show();
             },
             failure: function(errMsg) {
                 console.error(errMsg);
@@ -51,8 +60,13 @@
     <div class="alert alert-success" role="alert">
         La variable d'environnement PIPEDREAM_URL est correctement configuré: @pipeDreamUrl
     </div>
+    
+    
+    <div id="pipedream_spinner" class="spinner-border" role="status">
+        <span class="sr-only">Loading...</span>
+    </div>
     <div>
-        <button type="button" class="btn btn-info" onclick="callPipeDream()">Test API MongoDbApiTest</button>
+        <button id="call_pipedream_btn" type="button" class="btn btn-info" onclick="callPipeDream()">Test API MongoDbApiTest</button>
 
         <div id="pipedream_zone"></div>
     </div>

@@ -7,11 +7,50 @@
 
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+@section scripts
+{
+    <script>
+    
+   $(function () {
 
-    <h1>Configuration</h1>
+       var dataType = 'application/json; charset=utf-8';
+
+        $.ajax({
+            type: "GET",
+            url: "api/buildinfo",
+            contentType: dataType,
+            success: function (data){
+                console.log(data)
+                $('#version').text(data.version);
+                $('#branche').text(data.branche);
+                $('#tag').text(data.tag);
+                $('#baseTag').text(data.baseTag);
+                $('#comit').text(data.commit);
+                $('#comitDate').text(data.commitDate);
+                
+                $('#sha').text(data.sha);
+
+                $('#conf_spinner').hide();
+
+            },
+            failure: function(errMsg) {
+                console.error(errMsg);
+            }
+        });
+       
+
+   })
+
+    
+       
+    
+    </script>
+
+}
+
+<div class="text-center">
+   
+    <h1 class="display-4">Configuration</h1>
 
 
 @if (env == null)
@@ -48,4 +87,47 @@
     </div>
 }
     
+
+<h1 class="display-4">Configuration</h1>
+
+<div id="conf_spinner" class="spinner-border" role="status">
+  <span class="sr-only">Loading...</span>
+</div>
+
+<div class="card text-center">
+  <div id="version" class="card-header version">
+    Featured
+  </div>
+  <div class="card-body">
+    <p>
+    <label class="gitlabel">Branche:</label>
+    <label id="branche" class="card-text gitvalue">[branche]</label>
+    </p>
+    
+    <p>
+    <label class="gitlabel">Tag:</label>
+    <label id="tag" class="card-text gitvalue">[tag]</label>
+    </p>
+
+
+    <p>
+    <label class="gitlabel">Base tag:</label>
+    <label id="baseTag" class="card-text gitvalue">[baseTag]</label>
+    </p>
+
+    <p>
+    <label class="gitlabel">Commit:</label>
+    <label id="comit" class="card-text gitvalue">[comit]</label>
+    </p>
+    
+    <p>
+    <label class="gitlabel">Sha:</label>
+    <label id="sha" class="card-text gitvalue">[sha]</label>
+    </p>
+  </div>
+  <div id="comitDate" class="card-footer text-muted version">
+    
+  </div>
+</div>
+
 </div>

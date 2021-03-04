@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using MongoApi.Models;
 using MongoDB.Driver;
 using MongoApi.Services;
-using MongoApi.Controllers.api.rsponse;
+using MongoApi.Controllers.Api.Response;
 using System.Net.Http;
 using Newtonsoft.Json;
 
