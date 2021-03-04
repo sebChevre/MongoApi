@@ -30,7 +30,7 @@
                 console.log(data)
                 $('#pipedream_zone').append("<div class='alert alert-secondary' role='alert'>test: " + data.test +", date: " + data.date +"</div>")
                 $('#pipedream_spinner').hide();
-       $('#call_pipedream_btn').show();
+                $('#call_pipedream_btn').show();
             },
             failure: function(errMsg) {
                 console.error(errMsg);
@@ -66,7 +66,7 @@
         <span class="sr-only">Loading...</span>
     </div>
     <div>
-        <button id="call_pipedream_btn" type="button" class="btn btn-info" onclick="callPipeDream()">Test API MongoDbApiTest</button>
+        <button id="call_pipedream_btn" type="button" class="btn btn-info call-pipedream-btn" onclick="callPipeDream()">Test API MongoDbApiTest</button>
 
         <div id="pipedream_zone"></div>
     </div>
