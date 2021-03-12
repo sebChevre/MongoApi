@@ -68,7 +68,7 @@ namespace MongoApi
             con.Close();
 
             Console.WriteLine("thread...");
-            //Thread.Sleep(50000);
+            Thread.Sleep(50000);
                         
 
                   
