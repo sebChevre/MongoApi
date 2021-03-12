@@ -1,0 +1,43 @@
+version: "3.9"
+services:
+  mongoapi:
+    image: "sebchevre/mongoapi:1.5"
+    ports:
+      - "9998:80"
+      - "9999:443"
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Production 
+      - MONGODB_URL=mongodb://mongodb:27017 
+      - ASPNETCORE_URLS=https://+;http://+
+      - ASPNETCORE_HTTPS_PORT=9999 
+      - ASPNETCORE_Kestrel__Certificates__Default__Password=110978 
+      - ASPNETCORE_Kestrel__Certificates__Default__Path=/https/mongoapi.pfx 
+      - PIPEDREAM_URL=https://31301cce0d381d6c9338a006d3d31044.m.pipedream.net
+    volumes:
+      - ${USERPROFILE}\.aspnet\https:/https/ 
+  mongodb:
+    container_name: mongodb
+    image: "mongo"
+    ports: 
+      - "27017:27017"
+
+  prometheus:
+    image: prom/prometheus
+    restart: always
+    ports:
+      - 9090:9090
+    volumes:
+      - ./prometheus.yml:/etc/prometheus/prometheus.yml:ro
+    networks:
+      - dotnetcorepromgrafana
+
+  grafana: 
+    image: grafana/grafana
+    #command:
+    environment:
+      - GF_SECURITY_ADMIN_PASSWORD=P@ssw0rd
+    restart: always
+    ports:
+      - 3000:3000
+    networks:
+      - dotnetcorepromgrafana

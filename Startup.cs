@@ -11,6 +11,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Options;
 using MongoApi.Models;
 using MongoApi.Services;
+using Prometheus;
 
 namespace MongoApi
 {
@@ -46,16 +47,7 @@ namespace MongoApi
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
-            
-            // Enable middleware to serve generated Swagger as a JSON endpoint.
-    app.UseSwagger();
-
-    // Enable middleware to serve swagger-ui (HTML, JS, CSS, etc.),
-    // specifying the Swagger JSON endpoint.
-    app.UseSwaggerUI(c =>
-    {
-        c.SwaggerEndpoint("/swagger/v1/swagger.json", "My API V1");
-    });
+            ConfigureSwagger(app);
 
             if (env.IsDevelopment())
             {
@@ -67,9 +59,15 @@ namespace MongoApi
                 // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }
+            
             app.UseHttpsRedirection();
+
             app.UseStaticFiles();
 
+            // Use the Prometheus middleware
+            app.UseMetricServer();
+            app.UseHttpMetrics();
+            
             app.UseRouting();
 
             app.UseAuthorization();
@@ -79,6 +77,32 @@ namespace MongoApi
                 endpoints.MapControllerRoute(
                     name: "default",
                     pattern: "{controller=Home}/{action=Index}/{id?}");
+            });
+
+
+        }
+
+        private static void ConfigureSwagger(IApplicationBuilder app)
+        {
+            // Enable middleware to serve generated Swagger as a JSON endpoint.
+            app.UseSwagger();
+
+            // Enable middleware to serve swagger-ui (HTML, JS, CSS, etc.),
+            // specifying the Swagger JSON endpoint.
+            app.UseSwaggerUI(c =>
+            {
+                c.SwaggerEndpoint("/swagger/v1/swagger.json", "My API V1");
+            });
+        }
+
+        private static void ConfigurePrometheus(IApplicationBuilder app)
+        {
+            var counter = Metrics.CreateCounter("pipedream_api_count", "Counts requests to the Pipedream API endpoints", new CounterConfiguration{
+            LabelNames = new[] { "method", "endpoint" }
+            });
+            
+            app.Use((context, next) =>{
+                counter.WithLabels(context.Request.Method, context.Request.Path).Inc();return next();
             });
         }
     }
