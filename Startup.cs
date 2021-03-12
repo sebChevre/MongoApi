@@ -11,6 +11,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Options;
 using MongoApi.Models;
 using MongoApi.Services;
+using Oracle.ManagedDataAccess.Client;
 
 namespace MongoApi
 {
@@ -48,14 +49,14 @@ namespace MongoApi
         {
             
             // Enable middleware to serve generated Swagger as a JSON endpoint.
-    app.UseSwagger();
+            app.UseSwagger();
 
-    // Enable middleware to serve swagger-ui (HTML, JS, CSS, etc.),
-    // specifying the Swagger JSON endpoint.
-    app.UseSwaggerUI(c =>
-    {
-        c.SwaggerEndpoint("/swagger/v1/swagger.json", "My API V1");
-    });
+            // Enable middleware to serve swagger-ui (HTML, JS, CSS, etc.),
+            // specifying the Swagger JSON endpoint.
+            app.UseSwaggerUI(c =>
+            {
+                c.SwaggerEndpoint("/swagger/v1/swagger.json", "My API V1");
+            });
 
             if (env.IsDevelopment())
             {
@@ -80,6 +81,8 @@ namespace MongoApi
                     name: "default",
                     pattern: "{controller=Home}/{action=Index}/{id?}");
             });
+
+           
         }
     }
 }
