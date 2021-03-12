@@ -1,0 +1,46 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    kompose.cmd: C:\dev\kompose\kompose.exe convert
+    kompose.version: 1.16.0 (0c01309)
+  creationTimestamp: null
+  
+  name: mongoapi
+spec:
+  replicas: 1
+  strategy: {}
+  selector:
+    matchLabels:
+      io.kompose.service: mongoapi
+  template:
+    metadata:
+      creationTimestamp: null
+      selector:
+      labels:
+        io.kompose.service: mongoapi
+    spec:
+      containers:
+      - env:
+        - name: ASPNETCORE_ENVIRONMENT
+          value: Production
+        - name: ASPNETCORE_HTTPS_PORT
+          value: "9999"
+        - name: ASPNETCORE_Kestrel__Certificates__Default__Password
+          value: "110978"
+        - name: ASPNETCORE_Kestrel__Certificates__Default__Path
+          value: /https/mongoapi.pfx
+        - name: ASPNETCORE_URLS
+          value: https://+;http://+
+        - name: MONGODB_URL
+          value: mongodb://mongodb:27017
+        - name: PIPEDREAM_URL
+          value: https://31301cce0d381d6c9338a006d3d31044.m.pipedream.net
+        image: sebchevre/mongoapi:1.5
+        name: mongoapi
+        ports:
+        - containerPort: 80
+        - containerPort: 443
+        resources: {}
+      restartPolicy: Always
+status: {}
