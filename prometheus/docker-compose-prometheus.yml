@@ -2,7 +2,7 @@ version: "3.9"
 services:
   mongoapi:
     container_name: "mongoapi"
-    image: "sebchevre/mongoapi:latest"
+    image: "sebchevre/mongoapi:1.71"
     ports:
       - "9998:80"
       - "9999:443"

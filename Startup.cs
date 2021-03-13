@@ -64,11 +64,12 @@ namespace MongoApi
 
             app.UseStaticFiles();
 
-            ConfigurePrometheus(app);
             // Use the Prometheus middleware
             app.UseMetricServer();
             app.UseHttpMetrics();
 
+            ConfigurePrometheus(app);
+            
             app.UseRouting();
 
             app.UseAuthorization();
