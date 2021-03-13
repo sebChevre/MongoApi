@@ -64,10 +64,11 @@ namespace MongoApi
 
             app.UseStaticFiles();
 
+            ConfigurePrometheus(app);
             // Use the Prometheus middleware
             app.UseMetricServer();
             app.UseHttpMetrics();
-            
+
             app.UseRouting();
 
             app.UseAuthorization();
@@ -102,7 +103,8 @@ namespace MongoApi
             });
             
             app.Use((context, next) =>{
-                counter.WithLabels(context.Request.Method, context.Request.Path).Inc();return next();
+                counter.WithLabels(context.Request.Method, context.Request.Path).Inc();
+                return next();
             });
         }
     }
