@@ -7,18 +7,20 @@ global:
   # external_labels:
   #   monitor: 'nats-openrmf-server'
 
-
+  
 # A scrape configuration containing exactly one endpoint to scrape:
 scrape_configs:
   # The job name is added as a label `job=<job_name>` to any timeseries scraped from this config.
   - job_name: 'pipedreamapi-read-prometheus'
-    metrics_path: "/metrics"
-    scheme : "https"
-  
+    metrics_path: /metrics
+    scheme : https
+    tls_config:
+      insecure_skip_verify: true
     # metrics_path defaults to '/metrics'
     static_configs:
+      
     # replace the IP with your local IP for development
     # localhost is not it, as that is w/in the container :)
-    - targets: ['mongoapi:9999']
+    - targets: ['mongoapi:443']
     
     
