@@ -1,8 +1,8 @@
 version: "3.9"
 services:
   mongoapi:
-    container_name: "mongoapi"
     image: "sebchevre/mongoapi:latest"
+    container_name: "mongoapi"
     ports:
       - "9998:80"
       - "9999:443"
@@ -16,25 +16,34 @@ services:
       - PIPEDREAM_URL=https://31301cce0d381d6c9338a006d3d31044.m.pipedream.net
     volumes:
       - ${USERPROFILE}\.aspnet\https:/https/ 
+    networks:
+      - mongoapi
+
   mongodb:
-    container_name: mongodb
     image: "mongo"
+    container_name: mongodb
     ports: 
       - "27017:27017"
     volumes:
       -   mongo_data:/data/db
+    networks:
+      - mongoapi
 
   prometheus:
     image: prom/prometheus
+    container_name: "prometheus"
     restart: always
     ports:
       - 9090:9090
     volumes:
       - ./prometheus.yml:/etc/prometheus/prometheus.yml:ro
+    networks:
+      - mongoapi
     
 
   grafana: 
     image: grafana/grafana
+    container_name: "grafana"
     #command:
     environment:
       - GF_SECURITY_ADMIN_PASSWORD=P@ssw0rd
@@ -47,6 +56,21 @@ services:
        #- $PWD/conf/grafana:/etc/grafana
        #- $PWD/logs/grafana:/var/log/grafana
        #- $PWD/data/grafana/provisioning:/etc/grafana/provisioning
+    networks:
+      - mongoapi
+
+networks:
+  mongoapi:
+    # Use a custom driver
+    name: mongoapi
+    driver: bridge
+  #backend:
+    # Use a custom driver which takes special options
+    #driver: custom-driver-2
+    #driver_opts:
+    #foo: "1"
+    #bar: "2"
+
 volumes:
   grafana_data:
   mongo_data:
