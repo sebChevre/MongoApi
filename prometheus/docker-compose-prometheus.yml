@@ -1,4 +1,4 @@
-version: "3.9"
+version: "3"
 services:
   mongoapi:
     image: "sebchevre/mongoapi:latest"
@@ -62,7 +62,7 @@ services:
 networks:
   mongoapi:
     # Use a custom driver
-    name: mongoapi
+    # name: mongoapi
     driver: bridge
   #backend:
     # Use a custom driver which takes special options

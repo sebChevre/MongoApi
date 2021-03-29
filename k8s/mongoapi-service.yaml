@@ -1,0 +1,23 @@
+apiVersion: v1
+kind: Service
+metadata:
+  annotations:
+    kompose.cmd: C:\dev\kompose\kompose.exe --file .\docker-compose-prometheus.yml
+      convert
+    kompose.version: 1.16.0 (0c01309)
+  creationTimestamp: null
+  labels:
+    io.kompose.service: mongoapi
+  name: mongoapi
+spec:
+  ports:
+  - name: "9998"
+    port: 9998
+    targetPort: 80
+  - name: "9999"
+    port: 9999
+    targetPort: 443
+  selector:
+    io.kompose.service: mongoapi
+status:
+  loadBalancer: {}

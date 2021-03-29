@@ -1,0 +1,62 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    kompose.cmd: C:\dev\kompose\kompose.exe --file .\docker-compose-prometheus.yml
+      convert
+    kompose.version: 1.16.0 (0c01309)
+  creationTimestamp: null
+  labels:
+    io.kompose.service: mongoapi
+  name: mongoapi
+spec:
+  replicas: 1
+  strategy: {}
+  selector:
+    matchLabels:
+      app: mongoapi
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        app: mongoapi
+    spec:
+      containers:
+      - env:
+        - name: ASPNETCORE_ENVIRONMENT
+          value: Production
+        - name: ASPNETCORE_HTTPS_PORT
+          value: "443"
+        - name: ASPNETCORE_Kestrel__Certificates__Default__Password
+          valueFrom:
+              secretKeyRef:
+                name: test-secret
+                key: certificatePassword
+        - name: ASPNETCORE_Kestrel__Certificates__Default__Path
+          value: /certs/aspnetcore-cert.pfx
+        - name: ASPNETCORE_URLS
+          value: https://+;http://+
+        - name: MONGODB_URL
+          value: mongodb://mongodb:27017
+        - name: PIPEDREAM_URL
+          value: https://31301cce0d381d6c9338a006d3d31044.m.pipedream.net
+        image: sebchevre/mongoapi:latest
+        name: mongoapi
+        ports:
+        - containerPort: 80
+        - containerPort: 443
+        resources: {}
+        volumeMounts:
+          - name: certificatesvolume
+            mountPath: /certs/aspnetcore-cert.pfx
+            subPath: aspnetcore-cert.pfx
+            readOnly: true
+      restartPolicy: Always
+      volumes:
+      - name: certificatesvolume
+        secret:
+          secretName: test-secret
+          items:
+          - key: certificate
+            path: aspnetcore-cert.pfx
+status: {}

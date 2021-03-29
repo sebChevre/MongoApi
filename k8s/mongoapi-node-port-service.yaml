@@ -1,0 +1,31 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name: mongo-api-node-port-service
+  namespace: default
+  selfLink: /api/v1/namespaces/default/services/mongo-api-node-port-service
+  uid: 32d6c239-6b63-475b-82c4-d38a5d9ea967
+  resourceVersion: '1111959'
+  creationTimestamp: '2021-03-22T12:46:34Z'
+  labels:
+    io.kompose.service: mongoapi
+spec:
+  ports:
+    - name: port-1
+      protocol: TCP
+      port: 80
+      targetPort: 80
+      nodePort: 31185
+    - name: port-2
+      protocol: TCP
+      port: 443
+      targetPort: 443
+      nodePort: 32317
+  selector:
+    app: mongoapi
+  clusterIP: 10.43.87.107
+  type: NodePort
+  sessionAffinity: None
+  externalTrafficPolicy: Cluster
+status:
+  loadBalancer: {}
