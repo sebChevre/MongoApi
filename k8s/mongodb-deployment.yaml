@@ -7,7 +7,7 @@ metadata:
     kompose.version: 1.16.0 (0c01309)
   creationTimestamp: null
   labels:
-    app: mongodb
+    io.kompose.service: mongodb
   name: mongodb
 spec:
   replicas: 1
@@ -20,7 +20,7 @@ spec:
     metadata:
       creationTimestamp: null
       labels:
-        io.kompose.service: mongodb
+        app: mongodb
     spec:
       containers:
       - image: mongo

@@ -12,6 +12,7 @@ using Microsoft.Extensions.Options;
 using MongoApi.Models;
 using MongoApi.Services;
 using Prometheus;
+using Consul;
 
 namespace MongoApi
 {
@@ -27,6 +28,13 @@ namespace MongoApi
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+
+            services.Configure<ConsulConfig>(Configuration.GetSection("consulConfig"));
+            services.AddSingleton<IConsulClient, ConsulClient>(p => new ConsulClient(consulConfig =>
+            {
+                var address = Configuration["consulConfig:address"];
+                consulConfig.Address = new Uri(address);
+            }));          
 
             services.AddSingleton<BeerService>();
             services.AddSingleton<MongoDbService>();
