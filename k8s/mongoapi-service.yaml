@@ -9,11 +9,10 @@ metadata:
   name: mongoapi-service
 spec:
   ports:
-  - name: "80"
+  - protocol: TCP
     port: 80
     targetPort: 80
   selector:
     app: mongoapi
 status:
   loadBalancer: {}
-
