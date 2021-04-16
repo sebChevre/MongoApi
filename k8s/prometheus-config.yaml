@@ -19,7 +19,7 @@ data:
       # The job name is added as a label `job=<job_name>` to any timeseries scraped from this config.
       - job_name: 'pipedreamapi-read-prometheus'
         metrics_path: /metrics
-        scheme : https
+        scheme : http
         tls_config:
           insecure_skip_verify: true
         # metrics_path defaults to '/metrics'

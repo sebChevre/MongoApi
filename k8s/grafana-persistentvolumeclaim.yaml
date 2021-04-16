@@ -1,6 +1,7 @@
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
+  namespace: mongoapi-env
   creationTimestamp: null
   labels:
     io.kompose.service: grafana-data

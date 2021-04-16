@@ -1,20 +1,18 @@
 apiVersion: v1
 kind: Service
 metadata:
+  namespace: mongoapi-env
   annotations:
-    kompose.cmd: C:\dev\kompose\kompose.exe --file .\docker-compose-prometheus.yml
-      convert
-    kompose.version: 1.16.0 (0c01309)
   creationTimestamp: null
   labels:
-    io.kompose.service: prometheus
+    service: prometheus
   name: prometheus
 spec:
   ports:
-  - name: "9090"
+  - protocol: TCP
     port: 9090
     targetPort: 9090
   selector:
-    io.kompose.service: prometheus
+    app: prometheus
 status:
   loadBalancer: {}

@@ -13,6 +13,6 @@ spec:
         pathType: Prefix
         backend:
           service:
-            name: mongoapi-service
+            name: mongoapi
             port: 
               number: 80
