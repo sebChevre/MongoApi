@@ -18,3 +18,15 @@ subsets:
  - addresses:
    - ip: 31301cce0d381d6c9338a006d3d31044.m.pipedream.net
    port: 443
+
+
+kind: Service
+apiVersion: v1
+metadata:
+  name: pipedream-external
+  namespace: mongoapi-env
+  labels:
+    service: pipedream-external
+spec:
+  type: ExternalName
+  externalName: 31301cce0d381d6c9338a006d3d31044.m.pipedream.net
