@@ -26,7 +26,7 @@ spec:
         - name: MONGODB_URL
           value: mongodb://mongodb:27017
         - name: PIPEDREAM_URL
-          value: https://31301cce0d381d6c9338a006d3d31044.m.pipedream.net
+          value: pipedream-external
         image: sebchevre/mongoapi:1.8.3-http
         name: mongoapi
         ports:
