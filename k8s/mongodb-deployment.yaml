@@ -1,10 +1,8 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
+  namespace: mongoapi-env
   annotations:
-    kompose.cmd: C:\dev\kompose\kompose.exe --file .\docker-compose-prometheus.yml
-      convert
-    kompose.version: 1.16.0 (0c01309)
   creationTimestamp: null
   labels:
     app: mongodb
@@ -20,7 +18,7 @@ spec:
     metadata:
       creationTimestamp: null
       labels:
-        io.kompose.service: mongodb
+        app: mongodb
     spec:
       containers:
       - image: mongo
