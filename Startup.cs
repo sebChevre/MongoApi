@@ -28,14 +28,13 @@ namespace MongoApi
         public void ConfigureServices(IServiceCollection services)
         {
 
-            services.AddCors();
-
+            
             services.AddCors(options =>
             {
                 options.AddPolicy("AllowAllOrigins",
                     builder => builder.AllowAnyOrigin());
             });
-            
+
             services.AddSingleton<BeerService>();
             services.AddSingleton<MongoDbService>();
 
@@ -77,6 +76,8 @@ namespace MongoApi
             
             app.UseRouting();
 
+            app.UseCors();
+            
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
