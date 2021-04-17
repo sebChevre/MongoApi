@@ -22,12 +22,11 @@
         $('#pipedream_spinner').show();
         $('#call_pipedream_btn').hide();
 
-
         var dataType = 'application/json; charset=utf-8';
 
         $.ajax({
             type: "GET",
-            url: "http://localhost:5010/api/pipedream",
+            url: "http://k8s.mongoapi.org/api/pipedream",
             contentType: dataType,
             success: function (data){
                 console.log(data)
