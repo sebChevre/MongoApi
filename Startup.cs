@@ -29,11 +29,7 @@ namespace MongoApi
         {
 
             
-            services.AddCors(options =>
-            {
-                options.AddPolicy("AllowAllOrigins",
-                    builder => builder.AllowAnyOrigin());
-            });
+            services.AddCors();
 
             services.AddSingleton<BeerService>();
             services.AddSingleton<MongoDbService>();
@@ -76,8 +72,12 @@ namespace MongoApi
             
             app.UseRouting();
 
-            app.UseCors();
-            
+            app.UseCors(x => x
+                .AllowAnyMethod()
+                .AllowAnyHeader()
+                .SetIsOriginAllowed(origin => true) // allow any origin
+                .AllowCredentials()); // allow credentials
+
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>

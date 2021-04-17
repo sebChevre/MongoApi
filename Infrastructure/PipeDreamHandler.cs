@@ -23,7 +23,7 @@ namespace MongoApi.Infrastructure
         public PipeDreamHandler()
         {
             _pipeDreamUrl =  Environment.GetEnvironmentVariable("PIPEDREAM_URL");
-            
+            Console.WriteLine("Pipedream url: " + _pipeDreamUrl);
         }
 
         public async Task<PipeDreamResponse> GetPipeDreamResponse(){
@@ -35,7 +35,9 @@ namespace MongoApi.Infrastructure
             {
                 using (var response = await httpClient.GetAsync(_pipeDreamUrl))
                 {
+                     Console.WriteLine("Pipedream request: " + _pipeDreamUrl);
                     string apiResponse = await response.Content.ReadAsStringAsync();
+                     Console.WriteLine("Pipedream response: " + apiResponse);
                     pipeDreamResponse = JsonConvert.DeserializeObject<PipeDreamResponse>(apiResponse);
                 }
             }
