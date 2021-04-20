@@ -29,9 +29,14 @@ namespace MongoApi.Infrastructure
         public async Task<PipeDreamResponse> GetPipeDreamResponse(){
             
             PipeDreamResponse pipeDreamResponse = new PipeDreamResponse();
+            var httpClientHandler = new HttpClientHandler();
+            httpClientHandler.ServerCertificateCustomValidationCallback = (message, cert, chain, sslPolicyErrors) =>
+            {
+                return true;
+            };
             
-            
-            using (var httpClient = new HttpClient())
+
+            using (var httpClient = new HttpClient(httpClientHandler))
             {
                 using (var response = await httpClient.GetAsync(_pipeDreamUrl))
                 {
