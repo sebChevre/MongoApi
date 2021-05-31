@@ -8,7 +8,7 @@ using MongoApi.Infrastructure;
 using System.Net.Http;
 using System.Threading.Tasks;
 
-namespace MongoApi.Controllers.Api{
+namespace BeerApi.Controllers{
 
     [ApiController]
     [Route("api/buildinfo")]

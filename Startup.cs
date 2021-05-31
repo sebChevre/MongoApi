@@ -105,7 +105,7 @@ namespace MongoApi
 
         private static void ConfigurePrometheus(IApplicationBuilder app)
         {
-            var counter = Metrics.CreateCounter("pipedream_api_count", "Counts requests to the Pipedream API endpoints", new CounterConfiguration{
+            var counter = Metrics.CreateCounter("endpoints_call_count", "Counts requests to the endpoints", new CounterConfiguration{
             LabelNames = new[] { "method", "endpoint" }
             });
             
